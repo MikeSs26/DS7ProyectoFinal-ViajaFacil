@@ -1,18 +1,26 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import HomePage from './pages/HomePage';
-import DestinationDetail from './pages/DestinationDetail';
+import React, { useState } from 'react';
+import Login from './components/login';
+import Register from './components/register';
+import HomePage from './HomePage';
+import './App.css';
 
 function App() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
   return (
-    <Router>
-      <div className="min-h-screen bg-gray-100">
-        <h1 className="text-4xl font-bold text-center text-blue-600 p-4">Bienvenido a ViajaFacil</h1>
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/destination/:id" element={<DestinationDetail />} />
-        </Routes>
-      </div>
-    </Router>
+    <div className="app">
+      <header><h1>Viaja Fácil</h1></header>
+      <main>
+        {!isLoggedIn ? (
+          <>
+            <Login onLogin={(token) => setIsLoggedIn(true)} />
+            <Register onRegister={() => alert('Registro exitoso, inicia sesión')} />
+          </>
+        ) : (
+          <HomePage />
+        )}
+      </main>
+    </div>
   );
 }
 
